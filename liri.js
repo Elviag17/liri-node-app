@@ -146,8 +146,27 @@ function doWhatItSays() {
     if (error) {
       return console.log(error);
     }
-    var datas = data.split(",");
-    console.log("node liri.js " + data);
+    var dataArr = data.split(",");
+    var funcs = dataArr[0];
+    var input = dataArr[1];
+
+    if (funcs === "concert-this") {
+      userInput = input;
+      concertThis();
+    } else if (funcs === "spotify-this-song") {
+      userInput = input;
+      spotifyFunc();
+    } else if (funcs === "movie-this") {
+      userInput = input;
+
+      movieThis();
+    } else if (funcs === "do-what-it-says") {
+      userInput = input;
+
+      doWhatItSays();
+    } else {
+      console.log("error");
+    }
   });
 }
 
