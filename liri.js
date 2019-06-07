@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+//save to variables all packages needed
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
@@ -8,11 +9,14 @@ var Spotify = require("node-spotify-api");
 var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
 
+//command argument
 var action = process.argv[2];
 
+//input argument
 var nodeArgs = process.argv;
 var userInput = "";
 
+//save last argument into one position even if it is multiple words
 for (var i = 3; i < nodeArgs.length; i++) {
   if (i > 3 && i < nodeArgs.length) {
     userInput = userInput + "+" + nodeArgs[i];
@@ -21,6 +25,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
   }
 }
 
+//function to get concert information
 function concertThis() {
   axios
     .get(
@@ -46,6 +51,7 @@ function concertThis() {
     });
 }
 
+//function to default spotify-this-song command if searched song does not exist
 function defaultSong() {
   spotify
     .request(
@@ -69,6 +75,7 @@ function defaultSong() {
     });
 }
 
+//function to get song information
 function spotifyFunc() {
   spotify
     .request("https://api.spotify.com/v1/search?q=" + userInput + "&type=track")
@@ -96,6 +103,7 @@ function spotifyFunc() {
     });
 }
 
+//function to default movie-this command if searched movie does not exist
 function mrNobody() {
   axios
     .get("http://www.omdbapi.com/?apikey=trilogy&t=Mr.Nobody")
@@ -116,7 +124,7 @@ function mrNobody() {
       console.log("Error: " + err);
     });
 }
-
+//function to get movie information
 function movieThis() {
   axios
     .get("http://www.omdbapi.com/?apikey=trilogy&t=" + userInput)
@@ -142,14 +150,21 @@ function movieThis() {
     });
 }
 
+//function to read file random.txt and run the command in it
 function doWhatItSays() {
   fs.readFile("random.txt", "utf8", function(error, data) {
     // If the code experiences any errors it will log the error to the console.
     if (error) {
       return console.log(error);
     }
+
+    //saving infomation from file into variables
     var dataArr = data.split(",");
+
+    //command variable
     var funcs = dataArr[0];
+
+    //name of the media type
     var input = dataArr[1];
 
     if (funcs === "concert-this") {
@@ -172,6 +187,7 @@ function doWhatItSays() {
   });
 }
 
+//calls function according to command given by user
 function actions() {
   if (action === "concert-this") {
     concertThis();
