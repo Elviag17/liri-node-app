@@ -76,16 +76,18 @@ function spotifyFunc() {
       if (response.tracks.items[0].name) {
         for (i = 0; i < response.tracks.items.length; i++) {
           //Artist name
-          console.log(response.tracks.items[i].album.artists[0].name);
+          console.log(
+            "Artist: " + response.tracks.items[i].album.artists[0].name
+          );
 
           //Song name
-          console.log(response.tracks.items[i].name);
+          console.log("Song Name: " + response.tracks.items[i].name);
 
           //Song preview
-          console.log(response.tracks.items[i].preview_url);
+          console.log("Preview link: " + response.tracks.items[i].preview_url);
 
           //Album name
-          console.log(response.tracks.items[i].album.name + "\n");
+          console.log("Album: " + response.tracks.items[i].album.name + "\n");
         }
       }
     })
